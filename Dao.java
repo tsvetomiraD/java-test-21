@@ -19,20 +19,6 @@ public class Dao {
         }
     }
 
-    public Product getProductBySiteId(String id) {
-        try (SqlSession session = factory.openSession()) {
-            Mapper productMapper = session.getMapper(Mapper.class);
-            return productMapper.getProductBySiteID(id);
-        }
-    }
-
-    public String getProductPrice(String id) {
-        try (SqlSession session = factory.openSession()) {
-            Mapper productMapper = session.getMapper(Mapper.class);
-            return productMapper.getProductPrice(id);
-        }
-    }
-
     public Set<Product> getAllProducts() {
         try (SqlSession session = factory.openSession()) {
             Mapper productMapper = session.getMapper(Mapper.class);
@@ -43,21 +29,27 @@ public class Dao {
     public int insertProduct(Product product) {
         try (SqlSession session = factory.openSession()) {
             Mapper productMapper = session.getMapper(Mapper.class);
-            return productMapper.insertProduct(product);
+            int res = productMapper.insertProduct(product);
+            session.commit();
+            return res;
         }
     }
 
     public int updateProduct(Product product, String id) {
         try (SqlSession session = factory.openSession()) {
             Mapper productMapper = session.getMapper(Mapper.class);
-            return productMapper.updateProduct(product, id);
+            int res = productMapper.updateProduct(product, id);
+            session.commit();
+            return res;
         }
     }
 
     public int updateAvailability(String id, int availability) {
         try (SqlSession session = factory.openSession()) {
             Mapper productMapper = session.getMapper(Mapper.class);
-            return productMapper.updateAvailability(id, availability);
+            int res = productMapper.updateAvailability(id, availability);
+            session.commit();
+            return res;
         }
     }
 }
